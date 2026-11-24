@@ -175,6 +175,71 @@ docker ps
 
 
 
+Step	Command	Purpose
+1	docker --version	Check Docker installation
+2	docker pull redis	Download Redis image
+3	docker run --name my-redis -d redis	Create and start container
+4	docker ps	Display running containers
+5	docker exec -it my-redis redis-cli	Enter Redis CLI
+6	SET name "Alice"	Store data (inside Redis CLI)
+7	GET name	Retrieve data (inside Redis CLI)
+8	exit	Exit Redis CLI
+9	docker stop my-redis	Stop container
+10	docker start my-redis	Start container again
+11	docker stop my-redis	Stop container
+12	docker rm my-redis	Remove container
+docker rmi redis
+
+Practical 2: Create a Custom Docker Image
+Open PowerShell.
+1	mkdir redis-docker	Create folder
+2	cd redis-docker	Enter folder
+3	notepad Dockerfile	Open Notepad to create Dockerfile
+
+Inside Notepad, type:
+FROM redis:latest
+CMD ["redis-server"]
+
+4. Click File → Save and save it as Dockerfile (without .txt). Close Notepad.
+
+Continue in PowerShell:
+Step	Command	Purpose
+4	docker build -t redisnew .	Build custom image
+5	docker images	View images
+6	docker run --name myredisnew -d redisnew	Run container
+7	docker ps	Check container
+8	docker exec -it myredisnew redis-cli	Enter Redis CLI
+9	SET name "Akshaya"	Store data
+10	GET name	Retrieve data
+11	exit	Exit Redis CLI
+12	docker stop myredisnew	Stop container
+13	docker rm myredisnew	Remove container
+14	docker rmi redisnew	Remove custom image
+
+Practical 3: Docker Hub – Commit, Push and Pull
+Open PowerShell.
+Step	Command	Purpose
+1	docker login	Login to Docker Hub
+2	docker pull redis	Download Redis image
+3	docker run --name my-redis -d redis	Create container
+4	docker commit my-redis akshayaavunoori/redis1	Create image from container
+5	docker images	Check image
+6	docker push akshayaavunoori/redis1	Upload image to Docker Hub
+7	docker stop my-redis	Stop container
+8	docker rm my-redis	Remove container
+9	docker rmi akshayaavunoori/redis1	Remove local image
+10	docker logout	Logout
+11	docker pull akshayaavunoori/redis1	Download image from Docker Hub
+12	docker run --name myredis -d akshayaavunoori/redis1	Run downloaded image
+13	docker exec -it myredis redis-cli	Enter Redis CLI
+14	SET name "Abcdef"	Store data
+15	GET name	Retrieve data
+16	exit	Exit Redis CLI
+17	docker stop myredis	Stop container
+18	docker rm myredis	Remove container
+
+
+
 
 
 
