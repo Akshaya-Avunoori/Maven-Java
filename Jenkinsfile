@@ -69,6 +69,7 @@ pipeline {
             steps {
                 bat "mvn test -f mavenjava"
             }
+            
         }
         stage('package') {
             steps {
@@ -77,3 +78,32 @@ pipeline {
         }
     }
 }
+
+
+
+//DockerFile - For Maven Java
+FROM eclipse-temurin:21-jre
+
+WORKDIR /app
+
+COPY target/Maven-Java-0.0.1-SNAPSHOT.jar app.jar
+
+CMD ["java", "-jar", "app.jar"]
+
+
+//DockerFile - For Maven Web
+
+
+
+FROM tomcat:9.0-jdk17-temurin
+
+RUN rm -rf /usr/local/tomcat/webapps/*
+
+COPY target/Maven-Web-App.war /usr/local/tomcat/webapps/ROOT.war
+
+EXPOSE 8080
+
+CMD ["catalina.sh", "run"]
+
+
+
